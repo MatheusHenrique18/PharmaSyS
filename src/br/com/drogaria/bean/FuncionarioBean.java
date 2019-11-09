@@ -21,9 +21,6 @@ public class FuncionarioBean {
 	private Long codigo;
 	
 	public Funcionario getFuncionarioCadastro() {
-		if(funcionarioCadastro == null) {
-			funcionarioCadastro = new Funcionario();
-		}
 		return funcionarioCadastro;
 	}
 

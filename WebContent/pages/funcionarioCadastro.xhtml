@@ -46,11 +46,11 @@
 				<p:password id="senha" maxlength="50" size="20" value="#{funcionarioBean.funcionarioCadastro.senha}" feedback="true"
 				promptLabel="Digite a senha" weakLabel="Senha fraca" 
 				goodLabel="Senha média" strongLabel="Senha forte" match="confSenha" 
-				validatorMessage="As duas senhas devem ser iguais" name="senha"
+				validatorMessage="As duas senhas devem ser iguais" name="senha" redisplay="true"
 				readonly="#{funcionarioBean.acao == 'Excluir'}"/>
 				
 				<p:outputLabel for="confSenha" value="Confirmação da senha: " />
-				<p:password id="confSenha" maxlength="50" size="20"
+				<p:password id="confSenha" maxlength="50" size="20" redisplay="true"
 				readonly="#{funcionarioBean.acao == 'Excluir'}"/>
 				
 				<p:outputLabel value="Função: " for="funcao"/>
