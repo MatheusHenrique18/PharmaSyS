@@ -28,7 +28,7 @@
 				filteredValue="#{vendaBean.listaProdutosFiltrados}"
 				var="produto" rows="4" paginator="true">
 				
-				<p:column headerText="Código" sortBy="#{produto.codigo}">
+				<p:column headerText="Código" filterBy="#{produto.codigo}">
 					<h:outputText value="#{produto.codigo}" />
 				</p:column>
 				<p:column headerText="Descrição" filterBy="#{produto.descricao}">
@@ -46,7 +46,7 @@
 				
 				<p:column headerText="Opções">
 					<p:commandButton value="Adicionar" actionListener="#{vendaBean.adicionar(produto)}" 
-					update=":frmVendaCad:tblItens" />
+					update=":frmVendaCad:tblItens  :frmVendaCad:txtValorTotalVenda" />
 				</p:column>
 			</p:dataTable>
 			
@@ -73,10 +73,57 @@
 				
 				<p:column headerText="Opções">
 					<p:commandButton value="Remover" actionListener="#{vendaBean.remover(item)}"
-					update=":frmVendaCad:tblItens" />
+					update=":frmVendaCad:tblItens :frmVendaCad:txtValorTotalVenda" />
 				</p:column>
 			</p:dataTable>
+			
+			<hr/>
+			
+			<div 
+			style="width: 1285px; height: 35px; background: #f1f1f1; padding: 12px 12px; border-radius: 10px;
+			position: absolute; margin-left: 7px;">
+			
+				<h:outputText id="txtValorTotalVenda" value="Valor Total: R$ #{vendaBean.vendaCadastro.valor}"
+				style="font-family: sans-serif; font-size: 26px;" />
+				
+				<p:commandButton value="Finalizar Compra" style="float:right; font-size: 18px;"
+				actionListener="#{vendaBean.carregarDadosVenda}"
+				update=":frmDlgFinVenda:pnlDlgFinVenda"
+				oncomplete="PF('wvDlgFinVenda').show();"/>
+			</div>
+			
 		</h:form>
+		
+		
+		<p:dialog closable="true" draggable="true" modal="true" resizable="false"
+			header="Dados da Venda" widgetVar="wvDlgFinVenda" appendTo="@(body)" >
+		<h:form id="frmDlgFinVenda">
+			<h:panelGrid id="pnlDlgFinVenda" columns="2">
+				<h:outputText value="Horário: " style="font-weight: bold;"/>
+				<h:outputText value="#{vendaBean.vendaCadastro.horario}">
+					<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="GMT-3" />
+				</h:outputText>
+				
+				<h:outputText value="Funcionário: " style="font-weight: bold;"/>
+				<h:outputText value="#{vendaBean.vendaCadastro.funcionario.nome}"/>
+				
+				<h:outputText value="CPF: " style="font-weight: bold;"/>
+				<h:outputText value="#{vendaBean.vendaCadastro.funcionario.cpf}"/>
+				
+				<h:outputText value="Função: " style="font-weight: bold;"/>
+				<h:outputText value="#{vendaBean.vendaCadastro.funcionario.funcao}"/>
+				
+				<h:outputText value="Valor Total: " style="font-weight: bold;"/>
+				<h:outputText value="R$ #{vendaBean.vendaCadastro.valor}" style="color: red;"/>
+			</h:panelGrid>
+			<h:panelGrid columns="2">
+				<p:commandButton value="Salvar" actionListener="#{vendaBean.salvar}"
+				update=":msgGlobal :frmVendaCad:tblItens :frmVendaCad:txtValorTotalVenda" 
+				oncomplete="PF('wvDlgFinVenda').hide();" />
+				<p:commandButton value="Cancelar" onclick="PF('wvDlgFinVenda').hide();" />
+			</h:panelGrid>
+		</h:form>
+		</p:dialog>
 			
 	</ui:define>
 </ui:composition>
