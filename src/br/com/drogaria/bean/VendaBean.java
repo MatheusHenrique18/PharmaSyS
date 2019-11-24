@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import br.com.drogaria.dao.FuncionarioDAO;
@@ -27,6 +28,10 @@ public class VendaBean {
 	private List<Item> listaItens;
 	private List<Produto> listaProdutos;
 	private List<Produto> listaProdutosFiltrados;
+	
+	@ManagedProperty(value = "#{autenticacaoBean}")
+	private AutenticacaoBean autenticacaoBean;
+	
 	public List<Produto> getListaProdutos() {
 		return listaProdutos;
 	}
@@ -58,6 +63,14 @@ public class VendaBean {
 	public void setVendaCadastro(Venda vendaCadastro) {
 		this.vendaCadastro = vendaCadastro;
 	}
+	
+	public AutenticacaoBean getAutenticacaoBean() {
+		return autenticacaoBean;
+	}
+	public void setAutenticacaoBean(AutenticacaoBean autenticacaoBean) {
+		this.autenticacaoBean = autenticacaoBean;
+	}
+	
 	public void carregarProdutos() {
 		try {
 			ProdutoDAO produtoDAO = new ProdutoDAO();
@@ -127,7 +140,7 @@ public class VendaBean {
 		vendaCadastro.setHorario(new Date());
 		
 		FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
-		Funcionario funcionarioVenda = funcionarioDAO.buscarPorCodigo(1L);
+		Funcionario funcionarioVenda = funcionarioDAO.buscarPorCodigo(autenticacaoBean.getFuncionarioLogado().getCodigo());
 		
 		vendaCadastro.setFuncionario(funcionarioVenda);
 	}

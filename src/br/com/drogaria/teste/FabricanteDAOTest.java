@@ -66,4 +66,5 @@ public class FabricanteDAOTest {
 		FabricanteDAO dao = new FabricanteDAO();
 		dao.editar(fabricante);
 	}
+	
 }

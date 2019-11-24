@@ -6,6 +6,8 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import br.com.drogaria.dao.FuncionarioDAO;
 import br.com.drogaria.domain.Funcionario;
 import br.com.drogaria.util.FacesUtil;
@@ -64,6 +66,7 @@ public class FuncionarioBean {
 
 		try {
 			FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+			funcionarioCadastro.setSenha(DigestUtils.md5Hex(funcionarioCadastro.getSenha()));
 			funcionarioDAO.salvar(funcionarioCadastro);
 			funcionarioCadastro = new Funcionario();
 
@@ -119,6 +122,7 @@ public class FuncionarioBean {
 
 		try {
 			FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+			funcionarioCadastro.setSenha(DigestUtils.md5Hex(funcionarioCadastro.getSenha()));
 			funcionarioDAO.editar(funcionarioCadastro);
 			
 			FacesUtil.addMsgInfo("Funcionario alterado com sucesso !");

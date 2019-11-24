@@ -80,4 +80,13 @@ public class FuncionarioDAOTest {
 		FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 		funcionarioDAO.excluir(funcionario);
 	}
+	
+	@Test
+	@Ignore
+	public void autenticar() {
+		FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+		Funcionario funcionario = funcionarioDAO.autenticar("123.456.789-09", "senha123");
+		
+		System.out.println("Funcionário: " + funcionario);
+	}
 }
